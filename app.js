@@ -69,8 +69,11 @@ function updateMessages(messages) {
   messages.forEach(msg => {
     console.log(msg.content);
     const msgDiv = document.createElement("div");
+    const msgOwner = document.createElement("h6");
     const msgText = document.createElement("p");
+    msgOwner.textContent = msg.role;
     msgText.textContent = msg.content;
+    msgDiv.appendChild(msgOwner);
     msgDiv.appendChild(msgText);
     conversationOutput.appendChild(msgDiv);
   })
