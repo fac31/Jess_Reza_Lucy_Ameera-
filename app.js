@@ -30,6 +30,7 @@ async function fetchResponse(userRequest) {
   };
 
   messages.push(prompt);
+  updateMessages(messages);
 
   try {
     console.log(apikey.value);
@@ -49,17 +50,38 @@ async function fetchResponse(userRequest) {
     const data = await response.json();
 
     const answer = data.choices[0].message.content;
-    console.log(answer);
+
+    messages.push({
+      role: 'assistant',
+      content: answer,
+    });
+
+    updateMessages(messages);
+
   } catch(error) {
     console.log(error);
   }
 }
 
+function updateMessages(messages) {
+  clearMessages();
+  console.log(messages);
+  messages.forEach(msg => {
+    console.log(msg.content);
+    const msgDiv = document.createElement("div");
+    const msgText = document.createElement("p");
+    msgText.textContent = msg.content;
+    msgDiv.appendChild(msgText);
+    conversationOutput.appendChild(msgDiv);
+  })
+}
+
+function clearMessages() {
+  conversationOutput.innerHTML = "";
+}
+
 function submitForm(e) {
   e.preventDefault();
-  const textDiv = document.createElement("div");
-  textDiv.textContent = userRequest.value;
-  conversationOutput.appendChild(textDiv);
 
   const apiKey = apikey.value;
   localStorage.setItem("apikey", apiKey);
