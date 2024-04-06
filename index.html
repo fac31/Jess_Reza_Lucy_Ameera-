@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="app.js" type="module"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>GPT Clone</h1>
+  <h2>How can I help you today?</h2>
+
+  <form class="form-container">
+    <div class="api-container">
+      <label for="apikey">Enter your api key:</label>
+      <input id="apikey" name="apikey" type="text" placeholder="Enter API key...">
+    </div>
+    <label for="user-request">Enter your message:</label>
+    <input placeholder="Ask GPT..." id="user-request" name="user-request" >
+    <button id="send-button">SUBMIT</button>
+  </form>
+
+  <section class="conversation-output">
+
+  </section>
+
+</body>
+</html>
