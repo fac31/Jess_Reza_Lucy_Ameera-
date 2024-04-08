@@ -1,22 +1,11 @@
-const sendButton = document.querySelector("#send-button");
 const conversationOutput = document.querySelector(".conversation-output");
 const userRequest = document.querySelector("#user-request");
-const apikey = document.querySelector("#apikey");
 const formContainer = document.querySelector(".form-container");
-const apiContainer = document.querySelector(".api-container");
+import getConfig from "./getConfig.js";
 
 const messages = [];
 let signal;
 let requestController;
-
-const requestOptions = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${apikey.value}`,
-  },
-  body: JSON.stringify(userRequest.value),
-};
 
 async function fetchResponse(userRequest) {
   const url="https://api.openai.com/v1/chat/completions";
@@ -33,12 +22,11 @@ async function fetchResponse(userRequest) {
   updateMessages(messages);
 
   try {
-    console.log(apikey.value);
     const response = await fetch(url, {
       method: 'POST',
       signal: signal,
       headers: {
-        Authorization: `Bearer ${apikey.value}`,
+        Authorization: `Bearer ${key}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -65,18 +53,24 @@ async function fetchResponse(userRequest) {
 
 function updateMessages(messages) {
   clearMessages();
-  console.log(messages);
   messages.forEach(msg => {
-    console.log(msg.content);
+    const sender = msg.role === "user" ? "User" : "ChatGPT";
     const msgDiv = document.createElement("div");
     const msgOwner = document.createElement("h6");
     const msgText = document.createElement("p");
-    msgOwner.textContent = msg.role;
+    msgDiv.classList.add("msg-container");
+    if (msg.role === "assistant") msgDiv.classList.add("gpt-msg");
+    msgOwner.classList.add("msg-header");
+    if (msg.role === "assistant") msgOwner.classList.add("gpt-header");
+    msgText.classList.add("msg-text");
+    msgOwner.textContent = sender;
     msgText.textContent = msg.content;
     msgDiv.appendChild(msgOwner);
     msgDiv.appendChild(msgText);
     conversationOutput.appendChild(msgDiv);
   })
+  conversationOutput.scrollTop = conversationOutput.scrollHeight;
+  userRequest.value = "";
 }
 
 function clearMessages() {
@@ -86,12 +80,15 @@ function clearMessages() {
 function submitForm(e) {
   e.preventDefault();
 
-  const apiKey = apikey.value;
-  localStorage.setItem("apikey", apiKey);
+  // const apiKey = apikey.value;
+  // localStorage.setItem("apikey", apiKey);
 
-  apiContainer.classList.add("hidden")
+  // apiContainer.classList.add("hidden")
 
   fetchResponse(userRequest);
 }
 
 formContainer.addEventListener("submit", submitForm)
+
+const config = await getConfig();
+const key = config?.OPEN_AI_KEY;

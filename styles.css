@@ -1,3 +1,110 @@
+body {
+  margin: 0;
+  font-family: "Open Sans";
+}
+
 .hidden {
   display: none;
+}
+
+.page-container {
+  height: 100vh;
+  width: 100vw;
+  background: #749C75;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+}
+
+.main-header {
+  margin: 0 0 2rem 0;
+  text-align: center;
+  font-family: "Lexend Peta";
+  font-size: 4rem;
+}
+
+.chat-container {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.conversation-output {
+  background: #EEEBD3;
+  height: 60vh;
+  overflow: scroll;
+  border-radius: 16px;
+  padding: 2rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+#user-request {
+  all: unset;
+  background: #EEEBD3;
+  width: 80%;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+#send-button {
+  all: unset;
+  background: #EEEBD3;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+#send-button:hover {
+  scale: 1.05;
+  cursor: pointer;
+}
+
+.msg-container {
+  margin-bottom: 1.5rem;
+  width: 80%;
+}
+
+.msg-header {
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+.msg-text {
+  margin: 0;
+}
+
+.gpt-msg {
+  align-self: end;
+  justify-self: end;
+}
+
+.gpt-header {
+  text-align: right;
+}
+
+@media (min-width: 600px) {
+  .form-container {
+    width: 80%;
+  }
+
+  .msg-container {
+    width: 90%;
+  }
+
+  #send-button {
+    width: 15%;
+  }
 }
