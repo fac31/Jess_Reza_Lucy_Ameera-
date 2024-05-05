@@ -1,5 +1,28 @@
 {
   "dependencies": {
     "openai": "^4.33.0"
-  }
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "name": "jess_reza_lucy_ameera-",
+  "description": "",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fac31/Jess_Reza_Lucy_Ameera-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fac31/Jess_Reza_Lucy_Ameera-/issues"
+  },
+  "homepage": "https://github.com/fac31/Jess_Reza_Lucy_Ameera-#readme"
 }
