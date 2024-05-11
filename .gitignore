@@ -2,3 +2,7 @@ config.json
 node_modules
 server/.env
 client/config.json
+.env
+server/node_modules
+client/node_modules
+package-lock.json
