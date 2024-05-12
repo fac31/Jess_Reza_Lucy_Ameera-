@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>razzle dazzle server public</h1>
+    <form action="">
+      input: <input type="text" name="input" id="input" />
+      <button id="get">get</button>
+      <button id="post">post</button>
+    </form>
+    <div id="output"></div>
+    <script>
+      const getBtn = document.getElementById("get");
+      const postBtn = document.getElementById("post");
+      const input = document.getElementById("input");
+      const output = document.getElementById("output");
+      const baseUrl = "http://localhost:5000/info";
+
+      getBtn.addEventListener("click", getData);
+      async function getData(e) {
+        e.preventDefault();
+        const response = await fetch(baseUrl + "?input=" + input.value,{
+          method: "GET"
+        });
+
+        console.log(response);
+        const data = await response.json();
+        input.value = data.info;
+      }
+
+      postBtn.addEventListener("click", postData);
+      async function postData(e) {
+        e.preventDefault();
+        const response = await fetch(baseUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ input: input.value }),
+        });
+
+        console.log(response);
+        const data = await response.json();
+        output.innerHTML = data.info;
+      }
+    </script>
+  </body>
+</html>
