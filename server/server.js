@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const axios = require("axios");
+const OpenAI = require('openai');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,48 +18,40 @@ app.get("/info", (req, res) => {
 
 app.post("/info", (req, res) => {
   console.log(req.body);
-  res.status(200).json({ info: "preformatte text 🎉" });
+  res.status(200).json({ info: "preformatte text " });
 });
 
+//  set up get and post routes to get user input and reponsd with the output once fetched from the api.
+
+
 // get inout from client side from the user
-// app.get('/api', (req, res) => {
-//     console.log(req.body);
-//     const userRequest = req.body.userRequest;
-//     res.json({
-//         status: 'success',
-//         data: req.body
-//     });
-// });
+
 // Route to handle incoming requests from frontend
-// app.get('/ask-gpt', async (req, res) => {
-//   try {
-//     const userRequest = req.body.userRequest;
-//     const apiKey = process.env.OPEN_AI_KEY; // Replace this with your OpenAI API key
+app.get('/ask-gpt', async (req, res) => {
+  try {
+    const userRequest = req.body;
+    console
+    
+    const apiKey = process.env.OPEN_AI_KEY; 
+    const openai = new OpenAI({ apiKey: apiKey });
 
-//     // Make a request to OpenAI Chat Completion API
-//     const response = await axios.get('https://api.openai.com/v1/chat/completions', {
-//       model: 'gpt-3.5-turbo',
-//       messages: [
-//         { role: 'system', content:'this is a test' }, // Initial prompt
-//         { role: 'user', content: userRequest } // User's input
-//       ],
-//       max_tokens: 10 // Adjust token limit based on your requirements
-//     }, {
-//       headers: {
-//         'Authorization': `Bearer ${apiKey}`,
-//         'Content-Type': 'application/json'
-//       }
-//     });
+    const completion = await openai.chat.completions.create({
+      messages: [{"role": "system", "content": "this is a test"},
+          {"role": "user", "content": userRequest}],
+      model: "gpt-3.5-turbo",
+    });
+    
+  
 
-//     const result = response.data.choices[0].message.content;
+    const result = completion.data;
+    console.log(result);
 
-//     // Send the result back to the frontend
-//     res.json({ result });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ error: error.message });
-//   }
-// });
+    // Send the result back to the frontend
+    res.json({ result });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //  satic files being passed on
 app.use(express.static("public"));

@@ -18,7 +18,7 @@
       const postBtn = document.getElementById("post");
       const input = document.getElementById("input");
       const output = document.getElementById("output");
-      const baseUrl = "http://localhost:5000/info";
+      const baseUrl = "http://localhost:5000/ask-gpt";
 
       getBtn.addEventListener("click", getData);
       async function getData(e) {
@@ -29,7 +29,7 @@
 
         console.log(response);
         const data = await response.json();
-        input.value = data.info;
+        output.innerHTML = data.choices[0].message.content;
       }
 
       postBtn.addEventListener("click", postData);
@@ -45,7 +45,7 @@
 
         console.log(response);
         const data = await response.json();
-        output.innerHTML = data.info;
+        output.innerHTML = data.choices[0].message.content;
       }
     </script>
   </body>
